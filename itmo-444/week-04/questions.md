@@ -17,10 +17,13 @@ close their accounts, even if it means giving them an easy way to move
 to a competing provider.
 
 3. List the key advantages of virtual machines.
-* They don't need the standard resources of a normal machine, allowing
+
+  * They don't need the standard resources of a normal machine, allowing
 one big machine to run many smaller virtual machines
-* They're easy to create and destroy
-* Controllable through software and can be programmed
+
+  * They're easy to create and destroy
+
+  * Controllable through software and can be programmed
 
 4. Why might you choose physical over virtual machines?
 Virtual machines share resources if run on the same machine, and can "steal" CPU resources
