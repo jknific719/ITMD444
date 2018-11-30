@@ -20,8 +20,7 @@ $mysqli = mysqli_connect($rdsIP,"mrvl","excelsior","requestdata") or die("Error 
 
 $sql = "CREATE TABLE IF NOT EXISTS requests
 (
-  id INT NOT NULL AUTO_INCREMENT,
-  uuid PRIMARY KEY(id)
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(200) NOT NULL,
   phone VARCHAR(20) NOT NULL,
