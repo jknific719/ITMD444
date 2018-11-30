@@ -3,7 +3,7 @@
   $email = $_GET["email"];
   $tel = $_GET["telnum"];
 	$filePath = $_GET["imgurl"];
-	require 'vendor/autoload.php';
+	require '/home/ubuntu/vendor/autoload.php';
 	$bucket = "mp2raw";
 	$keyName = basename($filePath);
 	use Aws\S3\S3Client;
