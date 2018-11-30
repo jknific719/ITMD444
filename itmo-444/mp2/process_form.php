@@ -25,7 +25,7 @@
 			array(
 				'Bucket' => $bucket,
 				'Key' => $keyName,
-				'SourceFile' => $tempFilePath
+				'SourceFile' => $tempFilePath,
         'ACL' => 'public-read'
 			)
 		);

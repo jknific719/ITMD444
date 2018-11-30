@@ -8,5 +8,5 @@ aws ec2 terminate-instances --instance-ids ${instances[0]} ${instances[1]} ${ins
 aws elb delete-load-balancer --load-balancer-name $elb
 aws s3 rb s3://mp2raw --force
 aws s3 rb s3://mp2finished --force
-aws rds delete-db-instance --db-instance-identifier $db_id
+aws rds delete-db-instance --db-instance-identifier $db_id --skip-final-snapshot
 exit 0;
