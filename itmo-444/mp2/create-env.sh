@@ -14,7 +14,6 @@ echo "Waiting until db instance is available..."
 aws rds wait db-instance-available --db-instance-identifier mp2database
 echo "Creating EC2 Instances"
 echo "Creating backend..."
-aws ec2 run-instances --image-id $imgid --count 1 --instance-type t2.micro --key-name $keyname --security-groups $secgrp --iam-instance-profile Name=$iamprofile --user-data file://backend.sh
 avilzone=($(aws ec2 run-instances --image-id $imgid --count $count --instance-type t2.micro --key-name $keyname --security-groups $secgrp --iam-instance-profile Name=$iamprofile --user-data file://frontend.sh | grep  AvailabilityZone | awk '{ print $2 }' | tr -d '",[]'))
 instances=($(aws ec2 describe-instances --filters "Name=image-id,Values=$imgid" "Name=instance-state-name,Values=pending,running" --query 'Reservations[*].Instances[*].InstanceId' | awk '{ print $1 }' | tr -d '",[]'))
 echo "Waiting..."
