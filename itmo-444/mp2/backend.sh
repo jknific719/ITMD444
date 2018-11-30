@@ -3,7 +3,7 @@
 apt-get update
 apt-get install -y apache2
 apt-get install -y git
-sudo apt-get install -y curl php php-simplexml unzip zip libapache2-mod-php php-xml php-mysql awscli
+sudo apt-get install -y curl php php-simplexml unzip zip libapache2-mod-php php-xml php-mysql awscli imagemagick
 cd /home/ubuntu
 sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 sudo php composer-setup.php --quiet

@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
-		<title>MP1</title>
+		<title>MP2</title>
 	</head>
-	
-	<body>
-	<h2>Jacob Knific</h2>
-	<img src="http://mp1bucket.s3.amazonaws.com/iit-logo.png" alt="IIT Logo" width="500" height="433">
 
+	<body>
+	<h2>Color to grayscale image converter</h2>
+	<p>
+		Hi-ho! This form will allow you to provide a link to an image, and will
+		provide you with an link to your provided ##PLACEHOLDER##
+	</p>
+	<form action="process_form.php" method="get">
+		Name: <input type="text" name="name" required><br>
+		Email: <input type="email" name="email"><br>
+		Cell phone Number: <input type="tel" name="telnum" required><br>
+		URL to image: <input type="url" name="imgurl" placeholder="http://www.example.com/example.jpg"
+		size="30" required><br>
+		<input type="submit">
+	</form>
 	</body>
 
 </html>
