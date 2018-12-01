@@ -37,7 +37,8 @@ $mysqli->close();
 use Aws\Sns\SnsClient;
 
 $client = SnsClient::factory(array(
-'region'  => 'us-east-1'
+'region'  => 'us-east-1',
+'version' => 'latest'
 ));
 
 $topic_arn = $client->createTopic(array(
