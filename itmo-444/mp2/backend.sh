@@ -11,4 +11,6 @@ sudo php -d memory_limit=-1 composer.phar require aws/aws-sdk-php 1>> /home/ubun
 git clone git@github.com:illinoistech-itm/jknific.git
 cp jknific/itmo-444/mp2/dbcreate.php /home/ubuntu/dbcreate.php
 sudo php dbcreate.php --quiet
+cp jknific/itmo-444/mp2/cronjob.txt /home/ubuntu/cronjob.text
+crontab -u ubuntu cronjob.txt
 exit 0
