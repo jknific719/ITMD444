@@ -24,7 +24,7 @@ if (!$receivemessageresult) {
   exit(0);
 }
 $receiptHandle = $receivemessageresult['Messages'][0]['ReceiptHandle'];
-$uuid = $receivemessageresult['Messages'][0]['Body'] . "\n";
+$uuid = $receivemessageresult['Messages'][0]['Body'];
 # Now in your data base do a select * from records where uuid=$uuid;
 # What will this give you?  S3 URL for the raw bucket
 use Aws\Rds\RdsClient;
@@ -39,11 +39,13 @@ $result = $rds->describeDBInstances([
 $rdsIP = $result['DBInstances'][0]['Endpoint']['Address'];
 $mysqli = mysqli_connect($rdsIP,"mrvl","excelsior","requestdata") or die("Error " . mysqli_error($mysqli));
 # 0 = not done, 1 = done for status
-$sql = "SELECT `s3rawurl` FROM requests WHERE uuid='" . $uuid . "'";
+$sql = "SELECT * FROM requests WHERE uuid='" . $uuid . "'";
 $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
-$filePath = $row['s3rawurl'];
-
+$filePath = $row["s3rawurl"];
+$email = $row["email"];
+$tel = $row["phone"];
+/*
 $sql = "SELECT `email` FROM requests WHERE uuid='" . $uuid . "'";
 $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
@@ -53,6 +55,7 @@ $sql = "SELECT `phone` FROM requests WHERE uuid='" . $uuid . "'";
 $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
 $tel = $row['phone'];
+*/
 # $mysqli->close();
 $keyName = basename($filePath);
 $bucket = "mp2finished";
