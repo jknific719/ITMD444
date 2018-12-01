@@ -11,7 +11,7 @@ $topic = $client->createTopic(array(
     'Name' => 'img_proc',
 ));
 $topic_arn = $topic->get("TopicArn");
-/*
+
 $result = $client->subscribe(array(
     // TopicArn is required
     'TopicArn' => $topic_arn,
@@ -21,9 +21,7 @@ $result = $client->subscribe(array(
 ));
 $result = $client->publish(array(
     'TopicArn' => $topic_arn,
-    'TargetArn' => $topic_arn,
     // Message is required
     'Message' => 'Hey Nerd'
   ));
-  */
 ?>
