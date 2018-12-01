@@ -42,17 +42,17 @@ $mysqli = mysqli_connect($rdsIP,"mrvl","excelsior","requestdata") or die("Error 
 $sql = "SELECT `s3rawurl` FROM requests WHERE uuid='" . $uuid . "'";
 $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
-$filePath = $row['s3rawurl']
+$filePath = $row['s3rawurl'];
 
 $sql = "SELECT `email` FROM requests WHERE uuid='" . $uuid . "'";
 $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
-$email = $row['email']
+$email = $row['email'];
 
 $sql = "SELECT `phone` FROM requests WHERE uuid='" . $uuid . "'";
 $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
-$tel = $row['phone']
+$tel = $row['phone'];
 # $mysqli->close();
 $keyName = basename($filePath);
 $bucket = "mp2finished";
