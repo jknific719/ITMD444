@@ -11,7 +11,6 @@ $sqs = new Aws\Sqs\SqsClient([
 $listQueueresult = $sqs->listQueues([
 
 ]);
-echo "Your SQS URL is: " . $listQueueresult['QueueUrls'][0] . "\n";
 $queueurl = $listQueueresult['QueueUrls'][0];
 
 $receivemessageresult = $sqs->receiveMessage([
@@ -24,8 +23,6 @@ $receivemessageresult = $sqs->receiveMessage([
 if (!$receivemessageresult) {
   exit(0);
 }
-# print out content of SQS message - we need to retreive Body and Receipt Handle
-#print_r ($receivemessageresult['Messages'])
 $receiptHandle = $receivemessageresult['Messages'][0]['ReceiptHandle'];
 $uuid = $receivemessageresult['Messages'][0]['Body'] . "\n";
 # Now in your data base do a select * from records where uuid=$uuid;
@@ -45,6 +42,11 @@ $mysqli = mysqli_connect($rdsIP,"mrvl","excelsior","requestdata") or die("Error 
 $sql = "SELECT s3rawurl FROM requests WHERE uuid='$uuid'";
 $filePath = $mysqli->query($sql);
 
+$sql = "SELECT email FROM requests WHERE uuid='$uuid'";
+$email = $mysqli->query($sql);
+
+$sql = "SELECT phone FROM requests WHERE uuid='$uuid'";
+$tel = $mysqli->query($sql);
 # $mysqli->close();
 $keyName = basename($filePath);
 $bucket = "mp2finished";
@@ -80,12 +82,31 @@ $s3url = "https://$bucket.s3.amazonaws.com/$keyName";
 $sql = "UPDATE requests SET status = '1', s3finisedurl = '$s3url'  WHERE uuid='$uuid'";
 $mysqli->query($sql);
 $mysqli->close();
+$sns = SnsClient::factory(array(
+'region'  => 'us-east-1',
+'version' => 'latest'
+));
+$topic = $sns->listTopics(array());
+$topic_arn = $topic->get("TopicArn");
 
+$telsub = $sns->subscribe(array(
+    'TopicArn' => $topic_arn,
+    'Protocol' => 'sms',
+    'Endpoint' => $tel
+));
+$emailsub = $sns->subscribe(array(
+    'TopicArn' => $topic_arn,
+    'Protocol' => 'email',
+    'Endpoint' => $email
+));
+$result = $sns->publish(array(
+    'TopicArn' => $topic_arn,
+    // Message is required
+    'Message' => "Here is your image: $s3url"
+  ));
 $deletemessageresult = $sqs->deleteMessage([
     'QueueUrl' => $queueurl, // REQUIRED
     'ReceiptHandle' => $receiptHandle, // REQUIRED
 ]);
 
 ?>
-
- ?>

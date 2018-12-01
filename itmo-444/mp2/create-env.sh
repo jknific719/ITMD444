@@ -8,6 +8,8 @@ count=$5
 elb=$6
 
 # Create EC2 instances
+echo "Creating SQS queue..."
+aws sqs create-queue --queue-name mp2queue
 echo "Creating RDS instance..."
 aws rds create-db-instance --db-name requestdata --db-instance-identifier mp2database --master-username mrvl --master-user-password excelsior --engine mysql --db-instance-class db.t2.micro --allocated-storage 20
 echo "Waiting until db instance is available..."

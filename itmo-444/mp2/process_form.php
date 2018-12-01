@@ -49,10 +49,6 @@ $sqs = new Aws\Sqs\SqsClient([
 $listQueueresult = $sqs->listQueues([
 
 ]);
-# print out every thing
-# print_r ($listQueueresult);
-
-echo "Your SQS URL is: " . $listQueueresult['QueueUrls'][0] . "\n";
 $queueurl = $listQueueresult['QueueUrls'][0];
 $uuid = uniqid();
 $sendmessageresult = $sqs->sendMessage([
