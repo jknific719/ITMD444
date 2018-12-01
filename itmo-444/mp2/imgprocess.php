@@ -88,7 +88,7 @@ try {
   echo $e->getMessage();
 }
 $s3url = "https://$bucket.s3.amazonaws.com/$keyName";
-$sql = "UPDATE requests SET `status` = '1', `s3finisedurl` = '" . $s3url . "'  WHERE uuid='" . $uuid . "'";
+$sql = "UPDATE requests SET `status` = '1', `s3finishedurl` = '" . $s3url . "'  WHERE uuid='" . $uuid . "'";
 $mysqli->query($sql);
 $mysqli->close();
 use Aws\Sns\SnsClient;
