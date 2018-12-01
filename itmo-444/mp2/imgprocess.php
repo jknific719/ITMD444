@@ -4,7 +4,7 @@ require '/home/ubuntu/vendor/autoload.php';
 use Aws\Sqs\SqsClient;
 $sqs = new Aws\Sqs\SqsClient([
     'version' => 'latest',
-    'region'  => 'us-east-2'
+    'region'  => 'us-east-1'
 ]);
 
 #list the SQS Queue URL
