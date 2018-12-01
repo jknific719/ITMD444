@@ -49,7 +49,7 @@
   # 0 = not done, 1 = done for status
   $sql = "INSERT INTO requests
     (name, email, phone, s3rawurl, status)
-    VALUES ($name, $email, $tel, $s3url, 0)";
+    VALUES ('$name', '$email', '$tel', '$s3url','0')";
     if ($mysqli->query($sql)) {
         printf("Values added to requests table.\n");
     }
