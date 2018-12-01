@@ -97,7 +97,7 @@ $sns = SnsClient::factory(array(
 'version' => 'latest'
 ));
 $topic = $sns->listTopics(array());
-$topic_arn = $topic->get("TopicArn");
+$topic_arn = $topic['Topics'][0]['TopicArn'];
 
 $telsub = $sns->subscribe(array(
     'TopicArn' => $topic_arn,
