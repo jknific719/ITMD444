@@ -14,11 +14,11 @@ aws sqs delete-queue --queue-url $sqsurl
 subs=($(aws sns list-subscriptions --output text --region us-east-1 | cut -f5))
 for i in "${subs[@]}"
 do
-  aws sns unsubscribe --subscription-arn $i
+  aws sns unsubscribe --subscription-arn $i --region us-east-1
 done
 topics=($(aws sns list-topics --output text --region us-east-1 | cut -f2))
 for n in "${topics[@]}"
 do
-  aws sns delete-topic --topic-arn $n
+  aws sns delete-topic --topic-arn $n --region us-east-1
 done
 exit 0;
