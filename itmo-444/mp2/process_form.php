@@ -42,7 +42,7 @@ $s3url = "https://$bucket.s3.amazonaws.com/$keyName";
 
 $sqs = new Aws\Sqs\SqsClient([
     'version' => 'latest',
-    'region'  => 'us-east-2'
+    'region'  => 'us-east-1'
 ]);
 
 #list the SQS Queue URL
