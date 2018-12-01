@@ -9,4 +9,16 @@ aws elb delete-load-balancer --load-balancer-name $elb
 aws s3 rb s3://mp2raw --force
 aws s3 rb s3://mp2finished --force
 aws rds delete-db-instance --db-instance-identifier $db_id --skip-final-snapshot
+sqsurl=$(aws sqs get-queue-url --queue-name mp2queue --output text)
+aws sqs delete-queue --queue-url $sqsurl
+subs=($(aws sns list-subscriptions --output text --region us-east-1 | cut -f5))
+for i in "${subs[@]}"
+do
+  aws sns unsubscribe --subscription-arn $i
+done
+topics=($(aws sns list-topics --output text --region us-east-1 | cut -f2))
+for n in "${topics[@]}"
+do
+  aws sns delete-topic --topic-arn $n
+done
 exit 0;
