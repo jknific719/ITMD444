@@ -1,0 +1,2 @@
+* * * * * /usr/bin/php /home/ubuntu/imgprocess.php
+* * * * * ( sleep 30; /usr/bin/php /home/ubuntu/imgprocess.php )

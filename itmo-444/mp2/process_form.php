@@ -34,7 +34,36 @@
 	} catch (Exception $e) {
 		echo $e->getMessage();
 	}
-  $s3url = "https://$bucket.s3.amazonaws.com/$keyName";
+
+$s3url = "https://$bucket.s3.amazonaws.com/$keyName";
+
+# End S3 raw upload
+# Start SQS queue & uuid generation
+
+$sqs = new Aws\Sqs\SqsClient([
+    'version' => 'latest',
+    'region'  => 'us-east-2'
+]);
+
+#list the SQS Queue URL
+$listQueueresult = $sqs->listQueues([
+
+]);
+# print out every thing
+# print_r ($listQueueresult);
+
+echo "Your SQS URL is: " . $listQueueresult['QueueUrls'][0] . "\n";
+$queueurl = $listQueueresult['QueueUrls'][0];
+$uuid = uniqid();
+$sendmessageresult = $sqs->sendMessage([
+    'DelaySeconds' => 30,
+    'MessageBody' => $uuid,
+    'QueueUrl' => $queueurl
+]);
+
+# End SQS queue & uuid generation
+# Start MySQL/RDS table insert
+
   use Aws\Rds\RdsClient;
   $rds = new Aws\Rds\RdsClient([
        'version' => 'latest',
@@ -48,8 +77,8 @@
   $mysqli = mysqli_connect($rdsIP,"mrvl","excelsior","requestdata") or die("Error " . mysqli_error($mysqli));
   # 0 = not done, 1 = done for status
   $sql = "INSERT INTO requests
-    (name, email, phone, s3rawurl, status)
-    VALUES ('$name', '$email', '$tel', '$s3url','0')";
+    (name, uuid, email, phone, s3rawurl, status)
+    VALUES ('$name', '$uuid', '$email', '$tel', '$s3url','0')";
     if ($mysqli->query($sql)) {
         printf("Values added to requests table.\n");
     }

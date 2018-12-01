@@ -21,6 +21,7 @@ $mysqli = mysqli_connect($rdsIP,"mrvl","excelsior","requestdata") or die("Error 
 $sql = "CREATE TABLE IF NOT EXISTS requests
 (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  uuid VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(200) NOT NULL,
   phone VARCHAR(20) NOT NULL,
@@ -32,4 +33,15 @@ if ($mysqli->query($sql)) {
     printf("Table requests successfully created.\n");
 }
 $mysqli->close();
+
+use Aws\Sns\SnsClient;
+
+$client = SnsClient::factory(array(
+'region'  => 'us-east-1'
+));
+
+$topic_arn = $client->createTopic(array(
+    'Name' => 'img_proc',
+));
+
 ?>
