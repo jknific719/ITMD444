@@ -39,14 +39,20 @@ $result = $rds->describeDBInstances([
 $rdsIP = $result['DBInstances'][0]['Endpoint']['Address'];
 $mysqli = mysqli_connect($rdsIP,"mrvl","excelsior","requestdata") or die("Error " . mysqli_error($mysqli));
 # 0 = not done, 1 = done for status
-$sql = "SELECT s3rawurl FROM requests WHERE uuid='$uuid'";
-$filePath = $mysqli->query($sql);
+$sql = "SELECT `s3rawurl` FROM requests WHERE uuid='" . $uuid . "'";
+$result = $mysqli->query($sql);
+$row = $result->fetch_assoc();
+$filePath = $row['s3rawurl']
 
-$sql = "SELECT email FROM requests WHERE uuid='$uuid'";
-$email = $mysqli->query($sql);
+$sql = "SELECT `email` FROM requests WHERE uuid='" . $uuid . "'";
+$result = $mysqli->query($sql);
+$row = $result->fetch_assoc();
+$email = $row['email']
 
-$sql = "SELECT phone FROM requests WHERE uuid='$uuid'";
-$tel = $mysqli->query($sql);
+$sql = "SELECT `phone` FROM requests WHERE uuid='" . $uuid . "'";
+$result = $mysqli->query($sql);
+$row = $result->fetch_assoc();
+$tel = $row['phone']
 # $mysqli->close();
 $keyName = basename($filePath);
 $bucket = "mp2finished";
@@ -82,6 +88,7 @@ $s3url = "https://$bucket.s3.amazonaws.com/$keyName";
 $sql = "UPDATE requests SET status = '1', s3finisedurl = '$s3url'  WHERE uuid='$uuid'";
 $mysqli->query($sql);
 $mysqli->close();
+use Aws\Sns\SnsClient;
 $sns = SnsClient::factory(array(
 'region'  => 'us-east-1',
 'version' => 'latest'
